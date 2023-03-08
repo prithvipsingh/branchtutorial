@@ -1,0 +1,164 @@
+
+
+Excercise 1 - setting up a local git repository
+-----------------------------------------------
+- create a folder, "FOLDER1" - mkdir FOLDER1
+- git init - git init
+- look at the .git folder ls .git
+
+- create a short file - touch short
+- check git status. where is this file in git terms (local-untracked / staged / committed) - untracked
+
+- stage the file - git add .
+- check git status. where is this file in git terms (local-untracked / staged / committed) - staged 
+
+- commit the file - git commit -m "commit short"
+- check git status. where is this file in git terms (local-untracked / staged / committed) - commited
+
+- change the file - echo "hello" >> short
+- check git status. where is this file in git terms (local-untracked / staged / committed) - untracked
+
+- stage the file - git add .
+- check git status. where is this file in git terms (local-untracked / staged / committed) - staged
+
+- commit the file - git commit -m "short modified"
+- check git status. where is this file in git terms (local-untracked / staged / committed) - commited
+
+- create another file - touch short2
+- commit it - git add , git commit -m "short2 added"  
+
+- take a look at the git log - git log
+
+Excercise 2 - Surfing the log
+-----------------------------
+- add 3 more commits to your repository (change & commit x 3) - 
+	echo hello2 >> short
+	git commit -am "hello2 added"
+	echo hello3 >> short
+	git commit -am "hello3 added"
+	echo hello4 >> short
+	git commit -am "hello4 added"
+- list all your commits using git log - git log
+
+- checkout an old commit - git checkout aafb831
+- examine
+  - the log, with & without --all
+     - where is HEAD? What state is it in? HEAD located at aafb831 , HEAD is in detached state 
+     - where is the master branch? can you see it? - the master branch is first with git --all
+  - the files
+     - are they all there? yes because HEAD attached to a a commit were all files existed
+     - what is their content?their content is the same as there were when the aafb831 commit was executed
+     cat short
+     hello
+     hello2
+
+- tag your current commit with a memorable name, e.g. "version 1.0" - git tag "version1.0"
+- look at the log - git log --oneline
+
+- checkout a different commit - git checkout 2d02e81
+- create a branch at this commit with a reasonable name, e.g. "fix/1" - git branch "fix/1"
+- look at the log - git log --oneline
+   - where is HEAD? What state is it in? what is it attached to? HEAD is attatched to fix/1 commit, head is in attached state to fix/1 branch
+   - where is the master branch? can you see it? the master brach can be seen with git log --all command it is located after the fix/1 branch 
+   - where is the tag you created earlier?the tag is at the the first checkout at aafb831 ID
+
+- jump back to master
+- examine
+  - the log, with & without --all
+     - where is HEAD? What state is it in?HEAD is attatched to master commit, head is in attached state to master branch
+     - where is the master branch? can you see it?yes master branch is now first in the log 
+  - the files
+     - are they all there?all files are there 
+     - what is their content?their content is same as it were since last time that HEAD was in master branch and i made hello4 modification
+
+
+Excercise 3 - Working with remote
+---------------------------------
+- create a new, empty, private github repository
+- set it as the origin of your repository - git remote add origin https://github.com/Yuval006/bootcamp-task3
+- push your changes to github - git push --all
+- change a file - echo hello5 >> short
+- commit - git commit -am "hello5 added to short"
+- check git status. where is this file in git terms (local-untracked / staged / committed) - commited
+
+- clone the remote repository into a new folder, "FOLDER2"
+- take a look and compare the git log
+  - in FOLDER1 - the Folder has all the logs from the beginnig
+  - in FOLDER2 - the Folder has no log
+  - on the remote repository - the remote repository ha the log as FOLDER1
+- push changes in FOLDER1 - git push origin master
+- take a look and compare the git log
+  - in FOLDER1 - log showing master is the latest change and origin has different master
+  - in FOLDER2 - still dont have any logs
+  - on the remote repository - have all logs but dont have the latest change of folder1
+- pull remote to FOLDER2 - git pull origin master
+- take a look and compare the git log
+  - in FOLDER1 - has one change that still didnt made in the remote repository
+  - in FOLDER2 - has the latest update that made to remote repository
+  - on the remote repository - has the same log as folder2
+
+Excercise 4 - Remote Branches
+-----------------------------
+- Fork the repository https://github.com/prithvipsingh/branchtutorial.git - git remote add ex4 https://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@github.com/Yuval006/branchtutorial , git pull ex4
+- look at log and graph - git log --graph --oneline
+*   04a868d (HEAD -> master, ex4/master) Merge pull request #6 from prithvipsingh/h2
+|\  
+| * 65726ae adding h2
+|/  
+*   1b38698 Merge pull request #5 from prithvipsingh/wagner
+|\  
+| * 6a87621 Changing the page title
+|/  
+*   326c013 Merge pull request #4 from prithvipsingh/prithvi
+|\  
+| * 7d9cb4e modified index.html
+|/  
+*   1f307af updates
+|\  
+| *   e43b3bd Merge pull request #2 from prithvipsingh/feature1
+| |\  
+| | * aabf20d updates
+* | | cd6edc0 added feature3
+* | | 35727f2 added
+* | | aed428b adding div
+|/ /  
+* | 222f559 Merge pull request #1 from prithvipsingh/feature1
+|\| 
+| * f8a022d inde.html added
+|/  
+* 4dc6dd9 add folder
+* 3351fe6 Initial commit
+
+- list the local branches - git branch -l , master
+- list the remote branches - git branch -r , remotes/ex4/master
+
+- checkout branch h2 and list all remote branches - what is your tracking branch? - git checkout 65726ae , git branch -r , my tracking branch is ex4/master
+
+Excercise 5 - Branches
+----------------------
+- create a new branch “new-branch” - git branch "new_branch"
+- checkout to branch “new-branch” - git checkout "new_branch"
+- create a  new file “file3.txt” with some text -  echo "some text" >> file3.txt
+- add and commit the file - git add . , git commit -m "file3.txt added"
+- push “new-branch” to origin “new-branch” - git push ex4 new_branch
+- checkout back to master - git checkout master
+- create a new file “file4.txt” and add some text - 
+- add and commit “file4.txt”
+- push changes to origin master
+- check in github both branches
+- create a new branch “my-second-branch”
+- rename  “my-second-branch” “temp-branch”
+- push  “temp-branch” to origin
+- delete local  “temp-branch”
+- delete remote  “temp-branch”
+
+Excercise 6 - Merging basics
+----------------------------
+- checkout to master
+- print “Hello” to file1.txt
+- add and commit changes
+- checkout to new-branch
+- print “Hi” to file1.txt
+- try to merge master into new-branch 
+- fix conflicts
+- try again to merge master into new-branch
